@@ -64,7 +64,7 @@ ostream &operator<<(ostream &os, const vector<T> &v) {
 }
 
 int main() {
-  freopen("in", "r", stdin);
+//   freopen("in", "r", stdin);
   FASTIO;
   int n;
   cin >> n;
