@@ -11,14 +11,13 @@
 #define ednl '\n'
 #define endl '\n'
 #define sep << ' ' <<
-typedef long long ll;
-typedef unsigned long long ull;
-typedef std::pair<int, int> pii;
-typedef std::pair<ull, ull> pull;
-typedef std::pair<ll, ll> pll;
-using namespace std;
+using ll = long long;
+using ull = unsigned long long;
+using pii = std::pair<int, int>;
+using pull = std::pair<ull, ull>;
+using pll = std::pair<ll, ll>;
 template <typename T>
-inline T power(T x, T y, T mod = numeric_limits<T>::max()) {
+inline T power(T x, T y, T mod = std::numeric_limits<T>::max()) {
   if (mod == 1) return 0;
   T res = 1;
   for (T i = 1; i <= y; i <<= 1, x = x * x % mod)
@@ -26,7 +25,7 @@ inline T power(T x, T y, T mod = numeric_limits<T>::max()) {
   return res;
 }
 template <typename T>
-inline T mul(T x, T y, T mod = numeric_limits<T>::max()) {
+inline T mul(T x, T y, T mod = std::numeric_limits<T>::max()) {
   if (mod == 1) return 0;
   T res = 0;
   for (T i = 1; i <= y; i <<= 1, x = x * 2 % mod)
@@ -49,27 +48,50 @@ inline bool chkmin(T &x, const T &y) {
   }
   return false;
 }
-template <class T>
-istream &operator>>(istream &is, vector<T> &v) {
-  for (T &x : v) is >> x;
+
+template <class T1, class T2>
+inline std::istream &operator>>(std::istream &is, std::pair<T1, T2> &v) {
+  is >> v.first >> v.second;
   return is;
 }
-template <class T>
-ostream &operator<<(ostream &os, const vector<T> &v) {
-  if (!v.empty()) {
-    os << v.front();
-    for (int i = 1; i < v.size(); ++i) os << ' ' << v[i];
-  }
+template <class T1, class T2>
+inline std::ostream &operator<<(std::ostream &os, const std::pair<T1, T2> &v) {
+  os << '{' << v.first << ", " << v.second << '}';
   return os;
 }
 
+template <template <typename... Args> class ContainerT, typename... Args>
+std::ostream &operator<<(std::ostream &os,
+                         const ContainerT<Args...> &container) {
+  auto it = container.begin();
+  if (it != container.end()) {
+    os << *it;
+    while (++it != container.end()) {
+      os << ' ' << *it;
+    }
+  }
+  return os;
+}
+inline std::ostream &operator<<(std::ostream &__os, const std::string &__str) {
+  return std::__ostream_insert(__os, __str.data(), __str.size());
+}
+
+template <class T>
+std::istream &operator>>(std::istream &is, std::vector<T> &v) {
+  for (T &x : v) is >> x;
+  return is;
+}
+
+using namespace std;
+
 int main() {
-//   freopen("in", "r", stdin);
+  //   freopen("in", "r", stdin);
   FASTIO;
   int n;
   cin >> n;
   vector<pll> arr(n);
-  for (auto &i : arr) cin >> i.first >> i.second;
+  cin >> arr;
+  //   for (auto &i : arr) cin >> i.first >> i.second;
   sort(all(arr),
        [](const pll &x, const pll &y) { return x.second < y.second; });
   vector<ll> suff(n);
@@ -109,7 +131,7 @@ int main() {
       } else if (ptr == i) {
         assert(suff[i] >= back);
         // if (i == n - 1) {
-          ans += (suff[i] - back) + need * 2;
+        ans += (suff[i] - back) + need * 2;
         // } else {
         //   ans += (suff[i] - (back - suff[i + 1])) + need * 2;
         // }
